@@ -102,6 +102,7 @@ OSList *os_get_process_list()
     hsnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hsnap == INVALID_HANDLE_VALUE) {
         mterror(ARGV0, "CreateToolhelp32Snapshot");
+        CloseHandle(hpriv);
         return (NULL);
     }
 
@@ -109,6 +110,7 @@ OSList *os_get_process_list()
     if (!Process32First(hsnap, &p_entry) && !Process32Next(hsnap, &p_entry )) {
         mterror(ARGV0, "Process32First");
         CloseHandle(hsnap);
+        CloseHandle(hpriv);
         return (NULL);
     }
 
@@ -116,6 +118,7 @@ OSList *os_get_process_list()
     p_list = OSList_Create();
     if (!p_list) {
         CloseHandle(hsnap);
+        CloseHandle(hpriv);
         mterror(ARGV0, LIST_ERROR);
         return (0);
     }
@@ -158,6 +161,8 @@ OSList *os_get_process_list()
     os_win32_setdebugpriv(hpriv, 0);
 
     CloseHandle(hsnap);
+    CloseHandle(hpriv);
+
     return (p_list);
 }
 
