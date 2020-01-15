@@ -19,7 +19,7 @@ with patch('wazuh.common.ossec_uid'):
         from wazuh.tests.util import RBAC_bypasser
 
         wazuh.rbac.decorators.expose_resources = RBAC_bypasser
-        from wazuh.security_configuration_assessment import get_sca_list, fields_translation_sca, \
+        from wazuh.sca import get_sca_list, fields_translation_sca, \
             get_sca_checks, fields_translation_sca_check, fields_translation_sca_check_compliance
         from wazuh.results import AffectedItemsWazuhResult
 
